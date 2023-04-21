@@ -8,3 +8,12 @@ export const getQuestionList = async () => {
     return Promise.reject(error);
   }
 };
+
+export const getSingleQuestion = async (questionId) => {
+  try {
+    const response = await axios.get(`/question/${questionId}`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

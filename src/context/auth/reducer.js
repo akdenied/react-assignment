@@ -30,6 +30,7 @@ export const authReducer = (state, { type, payload }) => {
         user: payload.user,
       };
     case AUTH_CONSTANTS.GET_CURRENT_USER_FAIL:
+    case AUTH_CONSTANTS.LOGIN_FAIL:
       return {
         ...state,
         isLoading: false,
@@ -48,6 +49,7 @@ export const authReducer = (state, { type, payload }) => {
 export const AUTH_CONSTANTS = {
   LOADING: "LOADING",
   LOGIN: "LOGIN",
+  LOGIN_FAIL: "LOGIN_FAIL",
   LOG_OUT: "LOG_OUT",
   GET_CURRENT_USER: "GET_CURRENT_USER",
   GET_CURRENT_USER_FAIL: "GET_CURRENT_USER_FAIL",

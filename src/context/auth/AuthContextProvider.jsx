@@ -72,6 +72,9 @@ export const AuthContextProvider = ({ children }) => {
       return data;
     } catch (error) {
       const { data } = error.response;
+      dispatch({
+        type: AUTH_CONSTANTS.LOGIN_FAIL,
+      });
 
       if (data.message !== undefined) {
         const { message } = data;

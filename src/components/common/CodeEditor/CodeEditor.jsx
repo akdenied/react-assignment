@@ -17,7 +17,7 @@ const CodeEditor = () => {
   }
   return (
     <Editor
-      height="90vh"
+      height="85vh"
       defaultLanguage="javascript"
       defaultValue="// some comment"
       beforeMount={handleEditorWillMount}

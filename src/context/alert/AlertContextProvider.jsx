@@ -50,7 +50,7 @@ export const AlertContextProvider = ({ children }) => {
               <CloseIcon fontSize="inherit" />
             </IconButton>
           }
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, position: "fixed", top: 0, left: 0, right: 0 }}
         >
           {alert.message}
         </Alert>
