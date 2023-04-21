@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+.error-msg {
+  font-weight: 600;
+  color: rgb(214, 7, 7);
+  margin-top: 5px;
+}
