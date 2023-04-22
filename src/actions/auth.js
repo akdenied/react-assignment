@@ -21,6 +21,7 @@ export const register = async (payload) => {
 export const getCurrentUserDetails = async () => {
   try {
     const response = await axios.get("/user/current");
+
     return response.data;
   } catch (error) {
     return Promise.reject(error);

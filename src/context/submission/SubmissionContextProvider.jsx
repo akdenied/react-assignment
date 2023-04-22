@@ -3,14 +3,14 @@ import { getQuestionList, getSingleQuestion } from "../../actions/questions";
 import Loader from "../../components/common/loader/Loader";
 import { ALERT_TYPE, AlertContext } from "../alert/AlertContextProvider";
 import { AuthContext } from "../auth/AuthContextProvider";
-import { QUESTION_CONSTANTS, initialState, questionReducer } from "./reducer";
+import { SUBMISSION_CONSTANTS, initialState, questionReducer } from "./reducer";
 
-export const QuestionContext = createContext(null);
+export const SubmissionContext = createContext(null);
 
-export const QuestionContextProvider = ({ children }) => {
+export const SubmissionContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(questionReducer, initialState);
   console.log(
-    "🚀 ~ file: QuestionContextProvider.jsx:12 ~ QuestionContextProvider ~ state:",
+    "🚀 ~ file: SubmissionContextProvider.jsx:12 ~ SubmissionContextProvider ~ state:",
     state
   );
 
@@ -27,13 +27,13 @@ export const QuestionContextProvider = ({ children }) => {
   const handleGetQuestionsList = async () => {
     try {
       dispatch({
-        type: QUESTION_CONSTANTS.LOADING,
+        type: SUBMISSION_CONSTANTS.LOADING,
         payload: true,
       });
 
       const res = await getQuestionList();
       dispatch({
-        type: QUESTION_CONSTANTS.GET_QUESTION,
+        type: SUBMISSION_CONSTANTS.GET_SUBMISSION,
         payload: res.data,
       });
 
@@ -42,7 +42,7 @@ export const QuestionContextProvider = ({ children }) => {
       const { data } = error.response;
 
       dispatch({
-        type: QUESTION_CONSTANTS.GET_QUESTION_FAIL,
+        type: SUBMISSION_CONSTANTS.GET_SUBMISSION_FAIL,
         payload: error,
       });
 
@@ -59,14 +59,14 @@ export const QuestionContextProvider = ({ children }) => {
   const handleGetSingleQuestions = async (questionId) => {
     try {
       dispatch({
-        type: QUESTION_CONSTANTS.GET_SINGLE_QUESTION_LOADING,
+        type: SUBMISSION_CONSTANTS.GET_SINGLE_QUESTION_LOADING,
         payload: true,
       });
 
       const res = await getSingleQuestion(questionId);
 
       dispatch({
-        type: QUESTION_CONSTANTS.GET_SINGLE_QUESTION,
+        type: SUBMISSION_CONSTANTS.GET_SINGLE_QUESTION,
         payload: res.data,
       });
 
@@ -75,7 +75,7 @@ export const QuestionContextProvider = ({ children }) => {
       const { data } = error.response;
 
       dispatch({
-        type: QUESTION_CONSTANTS.GET_SINGLE_QUESTION_FAIL,
+        type: SUBMISSION_CONSTANTS.GET_SINGLE_QUESTION_FAIL,
         payload: error,
       });
 
@@ -92,10 +92,10 @@ export const QuestionContextProvider = ({ children }) => {
   if (state.isLoading || state.error) return <Loader />;
 
   return (
-    <QuestionContext.Provider
+    <SubmissionContext.Provider
       value={{ state, handleGetQuestionsList, handleGetSingleQuestions }}
     >
       {children}
-    </QuestionContext.Provider>
+    </SubmissionContext.Provider>
   );
 };

@@ -1,7 +1,7 @@
 import Editor, { DiffEditor, loader, useMonaco } from "@monaco-editor/react";
 import React, { useRef } from "react";
 
-const CodeEditor = () => {
+const CodeEditor = ({ value }) => {
   const monacoRef = useRef(null);
 
   function handleEditorWillMount(monaco) {
@@ -19,7 +19,7 @@ const CodeEditor = () => {
     <Editor
       height="85vh"
       defaultLanguage="javascript"
-      defaultValue="// some comment"
+      value={value}
       beforeMount={handleEditorWillMount}
       onMount={handleEditorDidMount}
     />

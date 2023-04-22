@@ -31,6 +31,7 @@ export const authReducer = (state, { type, payload }) => {
       };
     case AUTH_CONSTANTS.GET_CURRENT_USER_FAIL:
     case AUTH_CONSTANTS.LOGIN_FAIL:
+      localStorage.clear();
       return {
         ...state,
         isLoading: false,

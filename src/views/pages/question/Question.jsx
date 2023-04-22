@@ -1,6 +1,6 @@
 import { Box, Container, Divider, Grid, Typography } from "@mui/material";
 import { grey, purple } from "@mui/material/colors";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CodeEditor from "../../../components/common/CodeEditor/CodeEditor";
 import Loader from "../../../components/common/loader/Loader";
@@ -32,7 +32,7 @@ const QuestionContent = () => {
           <Grid item xs={5}>
             <Typography variant="h5">{data.title}</Typography>
             <Typography variant="h6">{data.description}</Typography>
-            {data?.testCases?.map((testcase, index) => (
+            {question?.testCases?.map((testcase, index) => (
               <Box
                 p={2}
                 sx={{
@@ -54,7 +54,7 @@ const QuestionContent = () => {
             ))}
           </Grid>
           <Grid item xs={7}>
-            <CodeEditor />
+            <CodeEditor value={data.code} />
           </Grid>
         </Grid>
       </Box>

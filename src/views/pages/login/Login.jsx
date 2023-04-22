@@ -6,12 +6,13 @@ import {
   Grid,
   Paper,
   Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
 
 import { useFormik } from "formik";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { AuthContext } from "../../../context/auth/AuthContextProvider";
@@ -20,8 +21,17 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email().label("Email Address").required(),
   password: Yup.string().label("Password").required(),
 });
+const adminInitialValues = {
+  email: "admin@gmail.com",
+  password: "Pa$$w0rd!",
+};
 
+const userInitialValues = {
+  email: "ankit@gmail.com",
+  password: "Pa$$w0rd!",
+};
 const Login = () => {
+  const [isAdmin, setIsAdmin] = useState(true);
   const { state, login } = useContext(AuthContext);
   const { isAuthenticated } = state;
   const navigate = useNavigate();
@@ -34,15 +44,11 @@ const Login = () => {
   }, [isAuthenticated]);
 
   const formik = useFormik({
-    initialValues: {
-      email: "ankit@gmail.com",
-      password: "Pa$$w0rd!",
-    },
+    initialValues: {},
     validationSchema,
     onSubmit: async (values) => {
       try {
         const res = await login(values);
-        console.log("🚀 ~ file: Login.jsx:39 ~ onSubmit: ~ res:", res);
         if (res.status == "PASS") {
           navigate("/");
         }
@@ -50,11 +56,30 @@ const Login = () => {
     },
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
-    formik;
+  useLayoutEffect(() => {
+    if (isAdmin) {
+      setFieldValue("email", adminInitialValues.email);
+    } else {
+      setFieldValue("email", userInitialValues.email);
+    }
+    setFieldValue("password", adminInitialValues.password);
+  }, [isAdmin]);
+
+  const handleIsAdminChange = (event) => {
+    setIsAdmin(event.target.checked);
+  };
 
   const handleNavigationToRegister = () => navigate("/register");
 
+  const {
+    values,
+    errors,
+    setFieldValue,
+    touched,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+  } = formik;
   return (
     <Container
       direction="column"
@@ -110,6 +135,19 @@ const Login = () => {
                   {errors.password}
                 </Typography>
               )}
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={5} align="right">
+                  <Typography variant="body2">User</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                  <Switch checked={isAdmin} onChange={handleIsAdminChange} />
+                </Grid>
+                <Grid item xs={5} align="left">
+                  <Typography variant="body2">Admin</Typography>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={2} direction="row" justifyContent={"flex-end"}>

@@ -1,4 +1,6 @@
+import WidgetsIcon from "@mui/icons-material/Widgets";
 import {
+  Box,
   Divider,
   Grid,
   List,
@@ -17,6 +19,20 @@ const QuestionsList = () => {
   const { isLoading, questions } = state;
 
   if (isLoading) return <Loader />;
+
+  if (questions.length <= 0)
+    return (
+      <Box py={20}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} align="center">
+            <WidgetsIcon fontSize="large" />
+          </Grid>
+          <Grid item xs={12} align="center">
+            <Typography variant="h6">There are no questions</Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    );
 
   return (
     <div>
